@@ -8,6 +8,7 @@ public class HelpermemoryApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HelpermemoryApplication.class, args);
+		System.out.print("hola ");
 	}
 
 }
