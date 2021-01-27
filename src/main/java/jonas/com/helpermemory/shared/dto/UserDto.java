@@ -17,7 +17,7 @@ public class UserDto implements Serializable{
     private String password;
     private String encryptedPassword;
     
-}
+
     public long getId() {
         return this.id;
     }
@@ -73,3 +73,4 @@ public class UserDto implements Serializable{
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
     }
+}
