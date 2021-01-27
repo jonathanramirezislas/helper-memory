@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jonas.com.helpermemory.models.request.UserDetailRequestModel;
+import jonas.com.helpermemory.models.responses.UserRest;
 
 @RestController
 @RequestMapping("/users") // locaslhost:8080/users
@@ -18,8 +19,8 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody UserDetailRequestModel userDedatils) {
-        return "post user details";
+    public UserRest createUser(@RequestBody UserDetailRequestModel userDedatils) {
+        return null;
     }
 
 }
