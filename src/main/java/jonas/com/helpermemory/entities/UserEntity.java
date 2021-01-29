@@ -1,6 +1,5 @@
-package jonas.com.helpermemory.entities;
 
-public package jonas.com.helpermemory.entities;
+package jonas.com.helpermemory.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ public class UserEntity implements Serializable{
     private String email;
 
     @Column(nullable = false)
+    private String encryptedPassword;
 
     public long getId() {
         return this.id;
@@ -84,11 +84,7 @@ public class UserEntity implements Serializable{
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
     }
-    private String encryptedPassword;
-
+    
 }
     
 
-class UserEntiry {
-    
-}
