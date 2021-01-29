@@ -6,25 +6,27 @@ package jonas.com.helpermemory.models.request;
 public class UserDetailRequestModel {
 
     
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
-    
-    public String getFirstname() {
-        return this.firstname;
+
+
+
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return this.lastname;
+    public String getLastName() {
+        return this.lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -42,5 +44,4 @@ public class UserDetailRequestModel {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 }

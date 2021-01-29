@@ -19,7 +19,7 @@ public class UserController {
 
     //Injection dependencies
     @Autowired
-    UserServiceInterface UserService;
+    UserServiceInterface userService;
 
     @GetMapping
     public String getUser(){
@@ -36,11 +36,14 @@ public class UserController {
         //Copy properties from one to another object
         BeanUtils.copyProperties(userDetails, userDto);
 
-        UserDto createdUser = UserService.createUser(userDto);
+        UserDto createdUser = userService.createUser(userDto);
 
         BeanUtils.copyProperties(createdUser, userToReturn);
 
         return userToReturn;//Return the object with the modifications
     }
+
+
+
 
 }

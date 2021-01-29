@@ -6,33 +6,10 @@ package jonas.com.helpermemory.models.responses;
 public class UserRest {
 
     private String userId; // sdfgsdfgsdgfsd uuid
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String email;
     
-    public String getFirstname() {
-        return this.firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return this.lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getUserId() {
         return this.userId;
@@ -42,5 +19,27 @@ public class UserRest {
         this.userId = userId;
     }
 
+    public String getFirstName() {
+        return this.firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

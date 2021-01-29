@@ -2,8 +2,7 @@
 package jonas.com.helpermemory.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +35,8 @@ public class UserEntity implements Serializable{
 
     @Column(nullable = false)
     private String encryptedPassword;
+
+//geters and setters
 
     public long getId() {
         return this.id;
