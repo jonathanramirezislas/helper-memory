@@ -3,7 +3,7 @@ package jonas.com.helpermemory.models.request;
 /**
  * UserDetailRequestModel
  */
-public class UserDetailRequestModel {
+public class UserDetailsRequestModel {
 
     
     private String firstName;

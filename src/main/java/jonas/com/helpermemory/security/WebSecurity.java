@@ -23,12 +23,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().
-        antMatchers(HttpMethod.POST, "/users").permitAll(). //this endpoint is public
-        anyRequest().authenticated();//the rest endpoints ask for auth
-           
+        antMatchers(HttpMethod.POST, "/users").permitAll() //this endpoint is public
+        .anyRequest().authenticated()//the rest endpoints ask for auth
+        .and().addFilter(new AuthenticationFilter(authenticationManager())).sessionManagement();//filter that we will use as authentication
     }
 
-    //Tell what 
+    //Tell what service want for the app and the algorithm that we implemented
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);

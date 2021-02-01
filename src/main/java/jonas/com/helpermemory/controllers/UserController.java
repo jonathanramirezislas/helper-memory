@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jonas.com.helpermemory.models.request.UserDetailRequestModel;
+import jonas.com.helpermemory.models.request.UserDetailsRequestModel;
 import jonas.com.helpermemory.models.responses.UserRest;
 import jonas.com.helpermemory.services.UserServiceInterface;
 import jonas.com.helpermemory.shared.dto.UserDto;
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserRest createUser(@RequestBody UserDetailRequestModel userDetails) {
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
        
         UserRest userToReturn = new UserRest();
 
