@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jonas.com.helpermemory.UserRepository;
+import jonas.com.helpermemory.repositories.UserRepository;
 import jonas.com.helpermemory.entities.UserEntity;
 import jonas.com.helpermemory.shared.dto.UserDto;
 

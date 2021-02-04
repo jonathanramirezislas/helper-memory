@@ -1,4 +1,4 @@
-package jonas.com.helpermemory;
+package jonas.com.helpermemory.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
