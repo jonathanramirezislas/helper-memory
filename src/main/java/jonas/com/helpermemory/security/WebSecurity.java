@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jonas.com.helpermemory.services.UserServiceInterface;
@@ -25,7 +26,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests().
         antMatchers(HttpMethod.POST, "/users").permitAll() //this endpoint is public
         .anyRequest().authenticated()//the rest endpoints ask for auth
-        .and().addFilter(getAuthenticationFilter());//filter that we will use as authentication
+        .and().addFilter(getAuthenticationFilter()) //filter that we will use as authentication
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
     }
 
     //Tell what service want for the app and the algorithm that we implemented
