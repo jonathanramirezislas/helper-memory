@@ -27,6 +27,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         antMatchers(HttpMethod.POST, "/users").permitAll() //this endpoint is public
         .anyRequest().authenticated()//the rest endpoints ask for auth
         .and().addFilter(getAuthenticationFilter()) //filter that we will use as authentication
+        .addFilter(new AuthorizationFilter(authenticationManager())) //filter for authorization using JWT
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
     }
@@ -38,12 +39,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     }
 
     public AuthenticationFilter getAuthenticationFilter() throws Exception {
-
         final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
-        
         //Override the default endpoint localhost:8080/login to localhost:8080/user/login
         filter.setFilterProcessesUrl("/users/login");
-
         return filter;
     }
 
