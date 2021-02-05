@@ -21,15 +21,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /*
+    #1 this endpoint is public
+    #2 the rest endpoints ask for auth
+    #3 filter that we will use as authentication
+    #4 filter for authorization using JWT
+    #5 We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
+    */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().
-        antMatchers(HttpMethod.POST, "/users").permitAll() //this endpoint is public
-        .anyRequest().authenticated()//the rest endpoints ask for auth
-        .and().addFilter(getAuthenticationFilter()) //filter that we will use as authentication
-        .addFilter(new AuthorizationFilter(authenticationManager())) //filter for authorization using JWT
+        antMatchers(HttpMethod.POST, "/users").permitAll() // #1
+        .anyRequest().authenticated()//#2
+        .and().addFilter(getAuthenticationFilter()) //#3
+        .addFilter(new AuthorizationFilter(authenticationManager())) //#4
         .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//#5
     }
 
     //Tell what service want for the app and the algorithm that we implemented

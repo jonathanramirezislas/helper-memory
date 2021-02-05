@@ -59,7 +59,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
             //System.out.println("email"+user);
             
             if (user != null) {//if the token was valid
-                                                             //email , password, authorities            
+                                                             //email , password, authorities(Admin,User,etc)            
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
             }
 
