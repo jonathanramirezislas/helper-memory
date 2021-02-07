@@ -61,5 +61,21 @@ public class UserService implements UserServiceInterface {
         return new User(userEntity.getEmail(),userEntity.getEncryptedPassword(), new ArrayList<>());
     }
 
+    @Override
+    public UserDto getUser(String email) {
+        //get the user by email
+        UserEntity userEntity = userRepository.findByEmail(email);
+        //check if there is a user 
+        if (userEntity == null) {
+            throw new UsernameNotFoundException(email);
+        }
+
+        //Copy and return the user found
+        UserDto userToReturn = new UserDto();
+        BeanUtils.copyProperties(userEntity, userToReturn);
+
+        return userToReturn;
+    }
+
     
 }

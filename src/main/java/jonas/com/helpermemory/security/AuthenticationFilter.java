@@ -20,7 +20,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jonas.com.helpermemory.SpringApplicationContext;
 import jonas.com.helpermemory.models.request.UserLoginRequestModel;
+import jonas.com.helpermemory.services.UserServiceInterface;
+import jonas.com.helpermemory.shared.dto.UserDto;
 
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -63,6 +66,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
                 .compact();
 
+
+        
+        UserServiceInterface userService = (UserServiceInterface) SpringApplicationContext.getBean("userService");
+        UserDto userDto = userService.getUser(username);
+
+                                    //public Id
+        response.addHeader("UserId", userDto.getUserId());
         response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
     }
 }
