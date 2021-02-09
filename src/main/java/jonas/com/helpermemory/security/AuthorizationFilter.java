@@ -53,7 +53,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
             token = token.replace(SecurityConstants.TOKEN_PREFIX, ""); //remove the prfix (Bearer)
             
             //Validate the token and get the email from getBody().getSubject()
-            String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token)
+            String user = Jwts.parser().setSigningKey(SecurityConstants.getTokenSecret()).parseClaimsJws(token)
                     .getBody().getSubject();
             
             //System.out.println("email"+user);
