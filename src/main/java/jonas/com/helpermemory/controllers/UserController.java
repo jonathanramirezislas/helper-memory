@@ -2,6 +2,7 @@ package jonas.com.helpermemory.controllers;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,49 +19,43 @@ import jonas.com.helpermemory.shared.dto.UserDto;
 @RequestMapping("/users") // locaslhost:8080/users
 public class UserController {
 
-    //Injection dependencies
+    // Injection dependencies
     @Autowired
     UserServiceInterface userService;
 
-  //Return JSON
-    @GetMapping
-    public UserRest getUser(){
+    // Return JSON and XML
+    @GetMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public UserRest getUser() {
 
-        //get authentication from the user
+        // get authentication from the user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //get the email of user that was atheticated
+        // get the email of user that was atheticated
         String email = authentication.getPrincipal().toString();
 
         UserDto userDto = userService.getUser(email);
 
         UserRest userToReturn = new UserRest();
-       
+
         BeanUtils.copyProperties(userDto, userToReturn);
 
         return userToReturn;
     }
 
-
-
-
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
-       
+
         UserRest userToReturn = new UserRest();
 
         UserDto userDto = new UserDto();
-        
-        //Copy properties from one to another object
+
+        // Copy properties from one to another object
         BeanUtils.copyProperties(userDetails, userDto);
 
         UserDto createdUser = userService.createUser(userDto);
 
         BeanUtils.copyProperties(createdUser, userToReturn);
 
-        return userToReturn;//Return the object with the modifications
+        return userToReturn;// Return the object with the modifications
     }
-
-
-
 
 }
