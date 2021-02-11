@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import jonas.com.helpermemory.repositories.UserRepository;
 import jonas.com.helpermemory.entities.UserEntity;
+import jonas.com.helpermemory.exceptions.EmailExistsException;
 import jonas.com.helpermemory.shared.dto.UserDto;
 
 @Service
@@ -27,9 +28,11 @@ public class UserService implements UserServiceInterface {
     @Override
     public UserDto createUser(UserDto user) {
 
-        if (userRepository.findByEmail(user.getEmail()) != null)
-            throw new RuntimeException("El correo electronico ya existe");
-
+        if (userRepository.findByEmail(user.getEmail()) != null){
+            //we launch our custome Expection
+            throw new EmailExistsException("El correo electronico ya existe");   
+        }
+    
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);
 
