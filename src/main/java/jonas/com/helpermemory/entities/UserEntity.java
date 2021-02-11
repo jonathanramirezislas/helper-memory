@@ -8,9 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 @Entity(name = "users")
+@Table(indexes = { @Index(columnList = "userId", name = "index_userid", unique = true),
+                   @Index(columnList = "email", name = "index_email", unique = true) })
 public class UserEntity implements Serializable{
 
    //It is a version number that each Serializable class has only is useful to prevent errors
