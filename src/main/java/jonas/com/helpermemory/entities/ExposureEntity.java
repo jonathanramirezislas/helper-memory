@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 @Entity(name = "exposures")
 public class ExposureEntity implements Serializable {
 
+    //It is a version number that each Serializable class has only is useful to prevent errors
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -26,7 +27,7 @@ public class ExposureEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "exposure")
     private List<PostEntity> posts = new ArrayList<>();
-
+//geters and setters
     public long getId() {
         return this.id;
     }
