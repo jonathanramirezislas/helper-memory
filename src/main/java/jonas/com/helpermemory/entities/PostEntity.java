@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
@@ -12,10 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity(name = "posts")
+@EntityListeners(AuditingEntityListener.class) //this allow to create automatically dates
 @Table(indexes = @Index(columnList = "postId", name = "index_postid", unique = true))
 public class PostEntity implements Serializable {
-
+  
+    //It is a version number that each Serializable class has only is useful to prevent errors
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -36,14 +41,14 @@ public class PostEntity implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id") //FK
+    @JoinColumn(name = "user_id") //<--FK
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "exposure_id") //FK
+    @JoinColumn(name = "exposure_id") //<--FK
     private ExposureEntity exposure;
 
-
+//geters and setters
     public long getId() {
         return this.id;
     }
