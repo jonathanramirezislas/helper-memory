@@ -1,5 +1,6 @@
 package jonas.com.helpermemory.controllers;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +24,9 @@ public class UserController {
     @Autowired
     UserServiceInterface userService;
 
+    @Autowired
+    ModelMapper mapper; 
+
     // Return JSON and XML
     @GetMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public UserRest getUser() {
@@ -34,9 +38,9 @@ public class UserController {
 
         UserDto userDto = userService.getUser(email);
 
-        UserRest userToReturn = new UserRest();
+        //mapper allows has to go deep in the map like cases of List<Post>
+        UserRest userToReturn = mapper.map(userDto, UserRest.class);
 
-        BeanUtils.copyProperties(userDto, userToReturn);
 
         return userToReturn;
     }
