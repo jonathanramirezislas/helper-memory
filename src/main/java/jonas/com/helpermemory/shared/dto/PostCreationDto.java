@@ -7,13 +7,9 @@ public class PostCreationDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String title;
-
     private String content;
-
     private long exposureId;
-
     private int expirationTime;
-
     private String userEmail;
 
     public String getTitle() {
