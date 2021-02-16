@@ -13,14 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity(name = "posts")
-@EntityListeners(AuditingEntityListener.class) //this allow to create automatically dates
+@EntityListeners(AuditingEntityListener.class) // this allow to create automatically dates
 @Table(indexes = @Index(columnList = "postId", name = "index_postid", unique = true))
 public class PostEntity implements Serializable {
-  
-    //It is a version number that each Serializable class has only is useful to prevent errors
+
+    // It is a version number that each Serializable class has only is useful to
+    // prevent errors
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -35,20 +37,24 @@ public class PostEntity implements Serializable {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-
+    
+//dates
     @Column(nullable = false)
     private Date expiresAt;
 
+    @CreatedDate
+    private Date createdAt;
 
+//RELATIONs
     @ManyToOne
-    @JoinColumn(name = "user_id") //<--FK
+    @JoinColumn(name = "user_id") // <--FK
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "exposure_id") //<--FK
+    @JoinColumn(name = "exposure_id") // <--FK
     private ExposureEntity exposure;
 
-//geters and setters
+    // geters and setters
     public long getId() {
         return this.id;
     }
@@ -105,4 +111,11 @@ public class PostEntity implements Serializable {
         this.exposure = exposure;
     }
 
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 }

@@ -10,9 +10,11 @@ public class ExposureDto implements Serializable{
     private long id;
 
     private String type;
+//relations
 
     private List<PostDto> posts;
-
+    
+//geter & setters
     public long getId() {
         return this.id;
     }

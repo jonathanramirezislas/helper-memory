@@ -19,11 +19,12 @@ public class PostDto implements Serializable{
     private Date expiresAt;
 
     private Date createdAt;
-
+//relations
     private UserDto user;
 
     private ExposureDto exposure;
 
+//getters and setters
     public long getId() {
         return this.id;
     }
