@@ -1,5 +1,6 @@
 package jonas.com.helpermemory;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,12 @@ public class HelpermemoryApplication {
 	@Bean(name = "AppProperties")
 	public AppProperties getAppProperties() {
 		return new AppProperties();
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		 return new ModelMapper();
+
 	}
 
 }

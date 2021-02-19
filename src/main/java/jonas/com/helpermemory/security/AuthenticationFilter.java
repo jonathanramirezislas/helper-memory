@@ -58,6 +58,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authentication) throws IOException, ServletException {
+
+                
         String username = ((User) authentication.getPrincipal()).getUsername();
         
        //create webtoken
