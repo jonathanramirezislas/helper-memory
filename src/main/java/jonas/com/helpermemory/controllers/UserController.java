@@ -1,5 +1,9 @@
 package jonas.com.helpermemory.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jonas.com.helpermemory.models.request.UserDetailsRequestModel;
+import jonas.com.helpermemory.models.responses.PostRest;
 import jonas.com.helpermemory.models.responses.UserRest;
 import jonas.com.helpermemory.services.UserServiceInterface;
+import jonas.com.helpermemory.shared.dto.PostDto;
 import jonas.com.helpermemory.shared.dto.UserDto;
 
 @RestController
@@ -60,6 +66,28 @@ public class UserController {
         BeanUtils.copyProperties(createdUser, userToReturn);
 
         return userToReturn;// Return the object with the modifications
+    }
+
+    @GetMapping(path = "/posts") // localhost:8080/users/posts
+    public List<PostRest> getPosts() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getPrincipal().toString();
+        //get list of post from user
+        List<PostDto> posts = userService.getUserPosts(email);
+        //declare the list that we will return to the client
+        List<PostRest> postRests = new ArrayList<>();
+        //Conver to list<PostDto> to list<PostRest>
+        for (PostDto post : posts) {           
+            PostRest postRest = mapper.map(post, PostRest.class);
+           //
+            if (postRest.getExpiresAt().compareTo(new Date(System.currentTimeMillis())) < 0) {
+                postRest.setExpired(true);
+            }
+            postRests.add(postRest);
+        }
+
+        return postRests;
     }
 
 }

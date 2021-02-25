@@ -9,4 +9,6 @@ import jonas.com.helpermemory.entities.UserEntity;
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
             //findBy(Email),FindBy(name),FindBy(Id), etc...
     UserEntity findByEmail(String email);
+
+    
 }
