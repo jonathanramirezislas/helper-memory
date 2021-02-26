@@ -80,7 +80,7 @@ public class UserController {
         //Conver to list<PostDto> to list<PostRest>
         for (PostDto post : posts) {           
             PostRest postRest = mapper.map(post, PostRest.class);
-           //
+           //if the post got expired we changed the status
             if (postRest.getExpiresAt().compareTo(new Date(System.currentTimeMillis())) < 0) {
                 postRest.setExpired(true);
             }

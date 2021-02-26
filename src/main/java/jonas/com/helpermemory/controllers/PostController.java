@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import jonas.com.helpermemory.services.PostServiceInterface;
 import jonas.com.helpermemory.services.UserServiceInterface;
 import jonas.com.helpermemory.shared.dto.PostCreationDto;
 import jonas.com.helpermemory.shared.dto.PostDto;
+import jonas.com.helpermemory.shared.dto.UserDto;
+import jonas.com.helpermemory.utils.Exposures;
 
 @RestController
 @RequestMapping("/posts")
@@ -67,5 +70,26 @@ public class PostController {
         return postRests;
     }
    
+    //ONLY the owners will be able to see the details of thier Post
+     @GetMapping(path = "/{id}") // localhost:8080/posts/uuid
+    public PostRest getPost(@PathVariable String id) {
+
+        PostDto postDto = postService.getPost(id);
+
+        PostRest postRest = mapper.map(postDto, PostRest.class);
+
+        // validate if the post is public o private  OR is expired 
+        if (postRest.getExposure().getId() == Exposures.PRIVATE || postRest.getExpired()) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            UserDto user = userService.getUser(authentication.getPrincipal().toString());
+            //if you are the owner the Post
+            if (user.getId() != postDto.getUser().getId()) {
+                throw new RuntimeException("You are not allow to do this request");
+            }
+        }
+
+        return postRest;
+    }
 
 }

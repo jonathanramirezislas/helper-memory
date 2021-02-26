@@ -18,5 +18,8 @@ public interface PostRepository extends PagingAndSortingRepository<PostEntity, L
     //select last 20 public post where the expires day is lower than now
     @Query(value = "SELECT * FROM posts p WHERE p.exposure_id = :exposure and p.expires_at > :now ORDER BY created_at DESC LIMIT 20", nativeQuery = true)
     List<PostEntity> getLastPublicPosts(@Param("exposure") long exposureId, @Param("now") Date now);
+    
+    PostEntity findByPostId(String postId);
+
 
 }

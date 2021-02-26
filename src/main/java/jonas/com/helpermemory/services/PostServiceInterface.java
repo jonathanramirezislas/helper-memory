@@ -10,4 +10,6 @@ public interface PostServiceInterface {
 
     public List<PostDto> getLastPosts();
 
+    public PostDto getPost(String postId);
+    
 }

@@ -78,4 +78,13 @@ public class PostService implements PostServiceInterface {
         return postDtos;
     }
 
+    @Override
+    public PostDto getPost(String postId) {
+
+        PostEntity postEntity = postRepository.findByPostId(postId);
+        PostDto postDto = mapper.map(postEntity, PostDto.class);
+
+        return postDto;
+    }
+
 }
