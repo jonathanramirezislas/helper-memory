@@ -1,9 +1,13 @@
 package jonas.com.helpermemory.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +52,19 @@ public class PostController {
 
         return postToReturn;
 
+    }
+
+    @GetMapping(path = "/last") // localhost:8080/posts/last
+    public List<PostRest> lastPosts() {
+        List<PostDto> posts = postService.getLastPosts();
+        List<PostRest> postRests = new ArrayList<>();
+
+        for (PostDto post : posts) {
+            PostRest postRest = mapper.map(post, PostRest.class);
+            postRests.add(postRest);
+        }
+
+        return postRests;
     }
    
 
