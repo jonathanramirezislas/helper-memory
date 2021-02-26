@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import jonas.com.helpermemory.models.responses.UserRest;
 import jonas.com.helpermemory.security.AppProperties;
+import jonas.com.helpermemory.shared.dto.UserDto;
 
 @SpringBootApplication 
 @EnableJpaAuditing //this allow to create automatically dates
@@ -36,8 +38,12 @@ public class HelpermemoryApplication {
 
 	@Bean
 	public ModelMapper modelMapper() {
-		 return new ModelMapper();
 
+		ModelMapper mapper = new ModelMapper();
+		//avoid to copy from UserDto to UserRest(Post)
+		mapper.typeMap(UserDto.class, UserRest.class).addMappings(m -> m.skip(UserRest::setPosts));
+
+		return mapper;
 	}
 
 }

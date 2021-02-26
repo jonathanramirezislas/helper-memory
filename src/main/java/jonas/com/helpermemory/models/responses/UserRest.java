@@ -1,5 +1,7 @@
 package jonas.com.helpermemory.models.responses;
 
+import java.util.List;
+
 /**
  * UserRest
  */
@@ -9,7 +11,8 @@ public class UserRest {
     private String firstName;
     private String lastName;
     private String email;
-    
+    private List<PostRest> posts;//this will caouse a problem of ininite mapping(so we had to configure Modelmapper)
+
 
     public String getUserId() {
         return this.userId;
@@ -42,4 +45,14 @@ public class UserRest {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public List<PostRest> getPosts() {
+        return this.posts;
+    }
+
+    public void setPosts(List<PostRest> posts) {
+        this.posts = posts;
+    }
+
 }
