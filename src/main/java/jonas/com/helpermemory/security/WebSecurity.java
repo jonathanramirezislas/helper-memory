@@ -16,27 +16,30 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private final UserServiceInterface userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    
     public WebSecurity(UserServiceInterface userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     /*
-    #1 this endpoint is public
-    #2 the rest endpoints ask for auth
-    #3 filter that we will use as authentication
-    #4 filter for authorization using JWT
-    #5 We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
+    #1 login endpoint is public 
+    #2 Allow to get post/last without authentication
+    #3 the rest endpoints ask for auth
+    #4 filter that we will use as authentication
+    #5 filter for authorization using JWT
+    #6 We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().
         antMatchers(HttpMethod.POST, "/users").permitAll() // #1
-        .anyRequest().authenticated()//#2
-        .and().addFilter(getAuthenticationFilter()) //#3
-        .addFilter(new AuthorizationFilter(authenticationManager())) //#4
+        .antMatchers(HttpMethod.GET, "/posts/last").permitAll()//#2
+        .anyRequest().authenticated()//#3
+        .and().addFilter(getAuthenticationFilter()) //#4
+        .addFilter(new AuthorizationFilter(authenticationManager())) //#5
         .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//#5
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//#6
     }
 
     //Tell what service want for the app and the algorithm that we implemented
