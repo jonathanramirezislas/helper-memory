@@ -87,4 +87,16 @@ public class PostService implements PostServiceInterface {
         return postDto;
     }
 
+    @Override
+    public void deletePost(String postId, long userId) {
+        PostEntity postEntity = postRepository.findByPostId(postId);
+
+        //check if user is the owner of this post
+        if (postEntity.getUser().getId() != userId)
+            throw new RuntimeException("No se puede realizar esta accion");
+
+        postRepository.delete(postEntity);
+
+    }
+
 }

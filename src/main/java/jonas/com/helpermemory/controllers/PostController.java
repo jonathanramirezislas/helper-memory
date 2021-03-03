@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jonas.com.helpermemory.models.request.PostCreateRequestModel;
+import jonas.com.helpermemory.models.responses.OperationStatusModel;
 import jonas.com.helpermemory.models.responses.PostRest;
 import jonas.com.helpermemory.services.PostServiceInterface;
 import jonas.com.helpermemory.services.UserServiceInterface;
@@ -91,5 +93,23 @@ public class PostController {
 
         return postRest;
     }
+
+    @DeleteMapping(path = "/{id}")
+    public OperationStatusModel deletePost(@PathVariable String id) {
+        //get user  who is authenticated
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto user = userService.getUser(authentication.getPrincipal().toString());
+
+        //object of response to the request
+        OperationStatusModel operationStatusModel = new OperationStatusModel();
+        operationStatusModel.setName("DELETE");//te operation
+
+        postService.deletePost(id, user.getId());//delete post
+
+        operationStatusModel.setResult("SUCCESS");//if the delete pass we set SUCCESS
+
+        return operationStatusModel;
+    }
+
 
 }

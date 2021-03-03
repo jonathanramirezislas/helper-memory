@@ -11,5 +11,8 @@ public interface PostServiceInterface {
     public List<PostDto> getLastPosts();
 
     public PostDto getPost(String postId);
+
+    public void deletePost(String postId, long userId);
+
     
 }
