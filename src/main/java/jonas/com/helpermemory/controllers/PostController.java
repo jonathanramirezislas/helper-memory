@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -104,11 +105,30 @@ public class PostController {
         OperationStatusModel operationStatusModel = new OperationStatusModel();
         operationStatusModel.setName("DELETE");//te operation
 
-        postService.deletePost(id, user.getId());//delete post
+        postService.deletePost(id, user.getId());//delete post 
 
         operationStatusModel.setResult("SUCCESS");//if the delete pass we set SUCCESS
 
         return operationStatusModel;
+    }
+
+    @PutMapping(path = "/{id}")
+    public PostRest updatePost(@RequestBody  PostCreateRequestModel postCreateRequestModel,
+            @PathVariable String id) {
+        //get user  who is authenticated
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto user = userService.getUser(authentication.getPrincipal().toString());
+
+        //from object request to PostCreationDto(we are using the same due to are the same params)
+        PostCreationDto postUpdateDto = mapper.map(postCreateRequestModel, PostCreationDto.class);
+       
+        //update the post
+        PostDto postDto = postService.updatePost(id, user.getId(), postUpdateDto);
+        
+        //response
+        PostRest updatedPost = mapper.map(postDto, PostRest.class);
+
+        return updatedPost;
     }
 
 

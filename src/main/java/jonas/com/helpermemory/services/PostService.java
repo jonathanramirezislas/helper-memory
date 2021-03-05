@@ -44,7 +44,7 @@ public class PostService implements PostServiceInterface {
 
         PostEntity postEntity = new PostEntity();
         postEntity.setUser(userEntity);
-        postEntity.setExposure(exposureEntity);
+        postEntity.setExposure(exposureEntity); //set exposure 
         postEntity.setTitle(post.getTitle());
         postEntity.setContent(post.getContent());
         postEntity.setPostId(UUID.randomUUID().toString());// Public Id
@@ -98,5 +98,33 @@ public class PostService implements PostServiceInterface {
         postRepository.delete(postEntity);
 
     }
+
+    /*We use the same PostCreationDto beacuse is the same params taht we recive from the request */
+    @Override
+    public PostDto updatePost(String postId, long userId, PostCreationDto postUpdateDto) {
+        //find the repository
+        PostEntity postEntity = postRepository.findByPostId(postId);
+      
+      //validate if the user is the owner
+        if (postEntity.getUser().getId() != userId)
+            throw new RuntimeException("You are not allow to do this action");
+
+        // get exposure by id
+        ExposureEntity exposureEntity = exposureRepository.findById(postUpdateDto.getExposureId());
+
+        postEntity.setExposure(exposureEntity);//set exposure 
+        postEntity.setTitle(postUpdateDto.getTitle());
+        postEntity.setContent(postUpdateDto.getContent());
+        postEntity.setExpiresAt(new Date(System.currentTimeMillis() + (postUpdateDto.getExpirationTime() * 60000)));
+    
+        //save the chanhges
+        PostEntity updatedPost = postRepository.save(postEntity);
+        //return the PostDto
+        PostDto postDto = mapper.map(updatedPost, PostDto.class);
+        return postDto;
+
+    }
+
+    
 
 }
