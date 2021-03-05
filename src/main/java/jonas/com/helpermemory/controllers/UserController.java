@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+    public UserRest createUser(@RequestBody @Valid UserDetailsRequestModel userDetails) {
 
         UserRest userToReturn = new UserRest();
 
