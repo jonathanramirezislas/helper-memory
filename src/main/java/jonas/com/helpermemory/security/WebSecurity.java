@@ -32,7 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().
+        http.cors().and().csrf().disable().authorizeRequests().
         antMatchers(HttpMethod.POST, "/users").permitAll() // #1
         .antMatchers(HttpMethod.GET, "/posts/last").permitAll()//#2
         .anyRequest().authenticated()//#3
