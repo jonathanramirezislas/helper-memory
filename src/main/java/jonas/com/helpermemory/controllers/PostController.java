@@ -3,6 +3,8 @@ package jonas.com.helpermemory.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -41,7 +43,7 @@ public class PostController {
 
 
     @PostMapping
-    public PostRest createPost(@RequestBody PostCreateRequestModel createRequestModel) {
+    public PostRest createPost(@RequestBody @Valid PostCreateRequestModel createRequestModel) {
 
         //get email from user who is authenticated
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -113,7 +115,7 @@ public class PostController {
     }
 
     @PutMapping(path = "/{id}")
-    public PostRest updatePost(@RequestBody  PostCreateRequestModel postCreateRequestModel,
+    public PostRest updatePost(@RequestBody @Valid PostCreateRequestModel postCreateRequestModel,
             @PathVariable String id) {
         //get user  who is authenticated
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
