@@ -25,21 +25,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     /*
     #1 login endpoint is public 
     #2 Allow to get post/last without authentication
-    #3 the rest endpoints ask for auth
-    #4 filter that we will use as authentication
-    #5 filter for authorization using JWT
-    #6 We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
+    #3 Allow to get post/{id} only public( login in controller)
+    #4 the rest endpoints ask for auth
+    #5 filter that we will use as authentication
+    #6 filter for authorization using JWT
+    #7 We indicate that we dont want to save A VARIABLE of session in the server due to we are usign JWT
     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().
         antMatchers(HttpMethod.POST, "/users").permitAll() // #1
         .antMatchers(HttpMethod.GET, "/posts/last").permitAll()//#2
-        .anyRequest().authenticated()//#3
-        .and().addFilter(getAuthenticationFilter()) //#4
-        .addFilter(new AuthorizationFilter(authenticationManager())) //#5
+        .antMatchers(HttpMethod.GET, "/posts/{id}").permitAll()//#3
+        .anyRequest().authenticated()//#4
+        .and().addFilter(getAuthenticationFilter()) //#5
+        .addFilter(new AuthorizationFilter(authenticationManager())) //#6
         .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//#6
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);//#7
     }
 
     //Tell what service want for the app and the algorithm that we implemented
